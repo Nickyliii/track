@@ -3,6 +3,7 @@ import { document, PageInstance } from "@tarojs/runtime";
 interface IOptions {
   selector: string;
   current: PageInstance;
+  dataType: string;
   relativeTo?: string;
   observeAll: boolean;
   initialRatio: number;
@@ -11,7 +12,7 @@ interface IOptions {
   once: boolean;
   exposureTime: number;
   interval: number;
-  onFinal: (startTime?: string, endTime?: string, value?: any) => void;
+  onFinal: (startTime?: any, endTime?: any, value?: any) => void;
 }
 
 class Observer {
@@ -68,19 +69,13 @@ class Observer {
     ob.observe(this.options.selector, (res: any) => {
       const { intersectionRatio, id } = res;
       const node = document.querySelector(`#${id}`);
-      console.log(id);
-      console.log(intersectionRatio);
-      console.log(this.options.threshold);
-      const visible = intersectionRatio >= this.options.threshold;
-      console.log(visible)
-      console.log("9999999999999999")
-
+      const data = node.props[this.options.dataType];
+      const visible = intersectionRatio > this.options.threshold;
       if (visible && !this.startTime) {
         this.startTime = new Date();
       }
-      console.log(this.startTime)
       if (!visible && this.startTime) {
-        this.judgeExposureTime(node);
+        this.judgeExposureTime(data);
       }
     });
     return ob;
@@ -88,14 +83,10 @@ class Observer {
   judgeExposureTime(node?: any) {
     const endTime = new Date();
     const lastTime = endTime.getTime() - this.startTime!.getTime();
-    console.log('--------------------------------------')
-    console.log(lastTime);
-    console.log(this.options.exposureTime);
     if (lastTime < this.options.exposureTime) {
       this.startTime = null;
       return;
     }
-    console.log("11111111111111111111111");
     this.options?.onFinal(this.startTime, endTime, node);
     this.startTime = null;
     if (this.options.once) {

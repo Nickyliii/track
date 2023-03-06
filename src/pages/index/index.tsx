@@ -90,6 +90,7 @@ const Index = () => {
       const ob = new Observer({
         selector: ".list",
         current,
+        dataType: "data-type",
         onFinal: (startTime, endTime, node) => {
           console.log(startTime, endTime, node);
         },
@@ -98,12 +99,18 @@ const Index = () => {
     });
   });
   const handleClick = (e) => {
-    console.log(e)
-  }
+    console.log(e);
+  };
   return (
     <View className="page">
       {dataList.map((item) => (
-        <View key={item?.id} id={item?.id} className="list" data-type={item} onClick={handleClick}>
+        <View
+          key={item?.id}
+          id={item?.id}
+          className="list"
+          data-type={item}
+          onClick={handleClick}
+        >
           <View className="list-left">
             <Image className="list-left-image" src={item?.image} />
           </View>
