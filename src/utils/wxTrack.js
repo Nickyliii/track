@@ -1112,6 +1112,7 @@ var wxDomPlugin = {
               }
               var e = args[0];
               if (e && e.type && e.currentTarget && !e.mitoWorked) {
+                // 这里处理数据
                 baseClient.triggerWxEvent(e);
                 if (listenerTypes.indexOf(e.type) > -1) {
                   throttleGestureTrigger(e);

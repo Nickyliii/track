@@ -11,6 +11,7 @@ init({
     if (data.type === "tap") {
       const node = document.querySelector(`#${data?.target?.id}`);
       console.log(node, 'nodeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+      // 这里处理数据
     }
   },
 });
