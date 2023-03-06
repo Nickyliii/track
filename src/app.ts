@@ -6,7 +6,6 @@ import { document } from "@tarojs/runtime";
 init({
   dsn: "http://abc.com/api",
   apikey: "123",
-  disabled: false,
   triggerWxEvent: (data) => {
     if (data.type === "tap") {
       const node = document.querySelector(`#${data?.target?.id}`);
